@@ -77,12 +77,7 @@ const TaskForm = props => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const classes1 = useStyles();
-
-    // const goBackHandler = () => {
-    //     props.onClick()
-    //     // navigate("/Account")
-    // }
-
+    const { getTask } = useState();
     const [values, setValues] = React.useState({
         'username': "",
         "taskName": '',
