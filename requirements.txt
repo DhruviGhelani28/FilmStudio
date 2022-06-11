@@ -1,0 +1,29 @@
+django
+djangorestframework
+djangorestframework-simplejwt
+pytz
+asgiref
+sqlparse
+whitenoise
+django-views
+PyJWT
+django-cors-headers
+python3-tk
+
+# python2.7 
+# python2.7-dev 
+# python2.7-mini
+# python 
+# python-all 
+# python-all-dev 
+# python-crypto 
+# python-cryptog 
+# python-dev 
+# python-idna
+#  python-jsonsch
+#  python-minimal
+#  python-secrets
+#  python-talloc
+#   python-wheel 
+#   python-xdg 
+#   python-six 
