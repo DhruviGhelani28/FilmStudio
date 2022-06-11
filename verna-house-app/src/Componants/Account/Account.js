@@ -15,6 +15,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Tasks from '../Tasks/Tasks';
+import { Tabs } from "@mui/material";
 
 // function LinkTab(props) {
 //     return (
@@ -45,21 +46,26 @@ const Account = props => {
     //onClick={tasksHandler}
     return (
         <React.Fragment>
-            <Box sx={{ width: '100%', height: '100%', typography: 'body1' }}>
-                <TabContext value={value}>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <TabList onChange={changeHandler} aria-label="lab API tabs example">
-                            <Tab label="Tasks" value="1" />
-                            <Tab label="Item Two" value="2" />
-                            <Tab label="Item Three" value="3" />
-                        </TabList>
+            <Box sx={{ width: '100%', height: '100vh' }}>
+                <TabContext value={value} >
+                    <Box sx={{ borderBottom: 1, borderColor: 'divider', backgroundColor: "#bdbdbd" }}>
+
+                        <Tabs
+                            value={value}
+                            onChange={changeHandler}
+                            textColor="secondary"
+                            indicatorColor="secondary">
+
+                            <Tab label="Tasks" value="1" sx={{ color: "black" }} />
+                            <Tab label="Item Two" value="2" sx={{ color: "black" }} />
+                            <Tab label="Item Three" value="3" sx={{ color: "black" }} />
+                        </Tabs>
                     </Box>
-                    <TabPanel value="1" >
+                    <TabPanel value="1" color="black">
                         <Tasks> {props.children} </Tasks>
 
                     </TabPanel>
                     <TabPanel value="2">
-                        {/* <Bills>{props.children}</Bills> */}
                     </TabPanel>
                     <TabPanel value="3">Item Three</TabPanel>
                 </TabContext>

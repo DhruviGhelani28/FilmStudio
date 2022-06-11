@@ -17,7 +17,7 @@ const MobileMenu = (props) => {
       sx={{
         width: "auto",
         height: "auto",
-        background: "linear-gradient(45deg, #575758  25%, #2F3031 80%)",
+        // background: "linear-gradient(45deg, #575758  25%, #2F3031 80%)",
       }}
       anchorEl={props.mobileMoreAnchorEl}
       anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
@@ -29,64 +29,64 @@ const MobileMenu = (props) => {
     >
       <MenuItem
         sx={{
-          height: 20,
-          background: "linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)",
+          height: 30,
+          background: "linear-gradient(45deg, #575758  25%, #2F3031 80%)",
         }}
       >
         <Typography
           component="span"
           variant="button"
           onClick={props.aboutHandler}
-          sx={{ color: "black", "&:hover": { color: "#EC255A" } }}
+          sx={{ color: "#bdbdbd", "&:hover": { color: "#EC255A" } }}
         >
           About Us
         </Typography>
       </MenuItem>
       <MenuItem
         sx={{
-          height: 20,
-          background: "linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)",
+          height: 30,
+          background: "linear-gradient(45deg, #575758  25%, #2F3031 80%)",
         }}
       >
         <Typography
           component="span"
           variant="button"
           onClick={props.loginHandler}
-          sx={{ color: "black", "&:hover": { color: "#EC255A" } }}
+          sx={{ color: "#bdbdbd", "&:hover": { color: "#EC255A" } }}
         >
           Login
         </Typography>
       </MenuItem>
       <MenuItem
         sx={{
-          height: 20,
-          background: "linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)",
+          height: 30,
+          background: "linear-gradient(45deg, #575758  25%, #2F3031 80%)",
         }}
       >
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+        <IconButton size="large" aria-label="show 4 new mails" >
           <Badge badgeContent={4} color="error">
-            <MailIcon />
+            <MailIcon sx={{ color: "#bdbdbd" }} />
           </Badge>
         </IconButton>
         <Typography
           component="span"
           variant="button"
           // onClick={props.loginHandler}
-          sx={{ color: "black", "&:hover": { color: "#EC255A" } }}
+          sx={{ color: "#bdbdbd", "&:hover": { color: "#EC255A" } }}
         >
           Messages
         </Typography>
       </MenuItem>
       <MenuItem
         sx={{
-          height: 20,
-          background: "linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)",
+          height: 30,
+          background: "linear-gradient(45deg, #575758  25%, #2F3031 80%)",
         }}
       >
         <IconButton
           size="large"
           aria-label="show 17 new notifications"
-          sx={{ color: "black", "&:hover": { color: "#EC255A" } }}
+          sx={{ color: "#bdbdbd", "&:hover": { color: "#EC255A" } }}
         >
           <Badge badgeContent={17} color="error">
             <NotificationsIcon />
@@ -96,8 +96,8 @@ const MobileMenu = (props) => {
       </MenuItem>
       <MenuItem
         sx={{
-          height: 20,
-          background: "linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)",
+          height: 30,
+          background: "linear-gradient(45deg, #575758  25%, #2F3031 80%)",
         }}
       >
         <IconButton
@@ -106,7 +106,7 @@ const MobileMenu = (props) => {
           aria-haspopup="true"
           aria-controls={props.mobileMenuId}
           // onClick={props.onOpen}
-          sx={{ color: "black", "&:hover": { color: "#EC255A" } }}
+          sx={{ color: "#bdbdbd", "&:hover": { color: "#EC255A" } }}
         >
           <AccountCircle />
           <h6>Profile</h6>
@@ -114,8 +114,8 @@ const MobileMenu = (props) => {
       </MenuItem>
       <MenuItem
         sx={{
-          height: 20,
-          background: "linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)",
+          height: 30,
+          background: "linear-gradient(45deg, #575758  25%, #2F3031 80%)",
         }}
       >
         <IconButton
@@ -124,7 +124,7 @@ const MobileMenu = (props) => {
           aria-haspopup="true"
           aria-controls={props.mobileMenuId}
           onClick={props.onOpen}
-          sx={{ color: "black", "&:hover": { color: "#EC255A" } }}
+          sx={{ color: "#bdbdbd", "&:hover": { color: "#EC255A" } }}
         >
           <AccountCircle />
           <h6>Account</h6>

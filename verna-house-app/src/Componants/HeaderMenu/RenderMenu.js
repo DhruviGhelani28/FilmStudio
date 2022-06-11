@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   root4: {
-    background: "linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)",
+    background: "linear-gradient(45deg, #575758  25%, #2F3031 80%)",
     "&:hover": {
       color: "#EC255A",
     },
@@ -21,7 +21,7 @@ const RenderMenu = (props) => {
   // const [anchorEl, setAnchorEl] = React.useState(props.anchorEl)
   const accountHandler = () => {
     props.setAnchorEl(null);
-    navigate("/Account/Tasks1");
+    navigate("/Account/MyTasks");
   };
 
   return (
@@ -34,10 +34,10 @@ const RenderMenu = (props) => {
       open={isMenuOpen}
       onClose={props.onClose}
     >
-      <MenuItem onClick={props.onClose} className={classes1.root4}>
+      <MenuItem onClick={props.onClose} className={classes1.root4} sx={{ color: "#bdbdbd" }}>
         Profile
       </MenuItem>
-      <MenuItem onClick={accountHandler} className={classes1.root4}>
+      <MenuItem onClick={accountHandler} className={classes1.root4} sx={{ color: "#bdbdbd" }}>
         My Account
       </MenuItem>
     </Menu>

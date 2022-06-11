@@ -25,14 +25,14 @@ import { useDispatch } from 'react-redux';
 import { addTask } from '../../Store/Task/TaskAction';
 const useStyles = makeStyles({
     root1: {
-        color: '#121212',
+
         '&:hover': {
             color: '#EC255A',
         }
     },
     root4:
     {
-        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
+        background: 'linear-gradient(45deg, #575758  25%, #2F3031 80%)',
         color: 'action.home',
     },
     root5:
@@ -43,7 +43,7 @@ const useStyles = makeStyles({
     {
         width: '40ch',
         marginTop: '10ch',
-        background: 'linear-gradient(45deg, #FFE3E3 25%, #F3C5C5 80%)',
+        background: 'linear-gradient(45deg, #575758  25%, #2F3031 80%)',
         color: 'action.home',
     }
 });
@@ -102,6 +102,7 @@ const TaskForm = props => {
         console.log(JSON.stringify(data, null, 2));
         props.onClick()
         dispatch(addTask({ data }))
+        props.setReload(true)
         setValues(
             {
                 'username': "",
@@ -119,8 +120,8 @@ const TaskForm = props => {
             <Card
                 variant="outlined"
                 sx={{
-                    maxWidth: 500, maxHeight: 8000, background: 'linear-gradient(45deg, #F3C5C5 30%, #FFE3E3 50%,#F3C5C5 30%,#FFE3E3 50%)',
-                    borderColor: '#EC255A',
+                    maxWidth: 500, maxHeight: 8000, background: 'linear-gradient(45deg, #575758  25%, #2F3031 80%)',
+                    borderColor: 'white',
                     borderWidth: 1,
                     borderRadius: 5,
                     color: 'action.home',
@@ -133,12 +134,12 @@ const TaskForm = props => {
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <CardActions>
-                    <IconButton sx={{ marginLeft: 1, }} onClick={props.onClick}>
+                    <IconButton sx={{ marginLeft: 1, color: 'white', }} onClick={props.onClick} className={classes1.root1}>
                         <ChevronLeftIcon />
                     </IconButton>
                 </CardActions>
                 <CardContent>
-                    <Typography variant="h4" component='div' fontSize='26px' className={classes.registration}>Add Task</Typography>
+                    <Typography variant="h4" component='div' fontSize='26px' className={classes.registration} color="#bdbdbd">Add Task</Typography>
                     <div className={classes1.root5}>
                         <TextField
                             className={classes1.allfield}
@@ -193,7 +194,7 @@ const TaskForm = props => {
                             // accept="datetime-local"
                             // value={values['dateTime']}
                             InputLabelProps={{
-                                "shrink": true
+                                "shrink": true,
                             }}
                             {...register('datetime', { required: true })}
                             error={!!errors?.datetime}
@@ -209,7 +210,7 @@ const TaskForm = props => {
                                 sx={{
                                     marginTop: 0.5,
                                     marginRight: -34,
-                                    color: 'black',
+                                    color: '#bdbdbd',
                                 }}>Submit</Button>
                         </div>
                     </div>

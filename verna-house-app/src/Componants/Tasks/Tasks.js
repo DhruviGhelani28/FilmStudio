@@ -5,7 +5,7 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import Paper from "@mui/material/Paper";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import classes from "../Login.module.css";
 import Divider from "@mui/material/Divider";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -31,142 +31,138 @@ const Tasks = (props) => {
   const { userInfo } = userLogin;
 
   const dispatch = useDispatch();
-  const myTasks = useSelector((state) => state.tasks);
-  const { getMyTasks } = myTasks;
-  const task = useSelector((state) => state.addTask);
-  const { loading, success, addTask } = task;
-  const [tasks, setTasks] = useState([]);
-  const data = JSON.parse(localStorage.getItem("userInfo"));
-  useEffect(() => {
-    dispatch(MyTasks());
-  }, [dispatch]);
+  const myTasks = useSelector((state) => state?.tasks);
+  const [id, setId] = useState("")
+  const { addTask } = useSelector((state) => state?.addTask);
+  const { editTask } = useSelector(state) =>}
+const [reload, setReload] = useState(false)
+const [tasks, setTasks] = useState([]);
+const data = JSON.parse(localStorage.getItem("userInfo"));
+useEffect(() => {
+  dispatch(MyTasks());
+}, [dispatch, reload]);
 
-  useEffect(() => {
-    setTasks(myTasks.getMyTasks);
-  }, [myTasks.getMyTasks, task]);
-  console.log(tasks);
-  const navigate = useNavigate();
+useEffect(() => {
+  setTasks(myTasks.getMyTasks);
+}, [myTasks.getMyTasks, task]);
+console.log(tasks);
+const navigate = useNavigate();
 
-  const [open, setOpen] = React.useState(false);
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleToggle = () => {
-    setOpen(!open);
-  };
-  // useEffect(() => {
-  //     const body = document.querySelector("body");
-  //     body.style.overflow = open ? "hidden" : "auto";
-  // }, [open])
-  return (
-    <React.Fragment>
-      <Grid sx={{ flexGrow: 1 }} container spacing={{ xs: 0, md: 1 }}>
-        <Grid item xs={12}>
-          <Grid
-            container
-            justifyContent="flex-end"
-            alignItems="center"
-            direction="row"
-            spacing={3}
+const [open, setOpen] = React.useState(false);
+const handleClose = () => {
+  setOpen(false);
+};
+const handleToggle = () => {
+  setOpen(!open);
+};
+
+const editHandler = (task) => {
+
+
+}
+useEffect(() => {
+  const body = document.querySelector("body");
+  body.style.overflow = open ? "hidden" : "auto";
+}, [open])
+return (
+  <React.Fragment>
+    <Grid sx={{ flexGrow: 1 }} container spacing={{ xs: 0, md: 1 }}>
+      <Grid item xs={12}>
+        <Grid
+          container
+          justifyContent="flex-end"
+          alignItems="center"
+          direction="row"
+          spacing={3}
+        >
+          <Fab
+            color="#bdbdbd"
+            aria-label="add"
+            size="small"
+            sx={{ marginTop: 0.3 }}
+            onClick={handleToggle}
           >
-            <Fab
-              color="primary"
-              aria-label="add"
-              size="small"
-              sx={{ marginTop: 0.3 }}
-              onClick={handleToggle}
-            >
-              <AddIcon />
-            </Fab>
-            <Backdrop
-              sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-              open={open}
-            >
-              <TaskForm onClick={handleClose} open={open}></TaskForm>
-            </Backdrop>
-          </Grid>
+            <AddIcon />
+          </Fab>
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={open}
+          >
+            <TaskForm onClick={handleClose} open={open} setReload={setReload}></TaskForm>
+          </Backdrop>
         </Grid>
-        <Grid item xs={12}>
-          <Grid
-            container
-            justifyContent="flex-start"
-            alignItems="flex-start"
-            direction="row"
-            spacing={2}
-          >
-            {tasks &&
-              tasks.map((value, index) => (
-                <Grid key={value.id} item xs={3}>
-                  <Paper
-                    sx={{
-                      maxHeight: 400,
-                      maxWidth: 300,
-                      padding: 0.5,
-                    }}
-                  >
-                    <Grid container direction={"row"} spacing={0}>
-                      <Grid item xs={8}>
+      </Grid>
+      <Grid item xs={12}>
+        <Grid
+          container
+          justifyContent="flex-start"
+          alignItems="flex-start"
+          direction="row"
+          spacing={2}
+        >
+          {tasks &&
+            tasks.map((value, index) => (
+              <Grid key={value.id} item xs={3}>
+                <Paper
+                  sx={{
+                    maxHeight: 400,
+                    maxWidth: 300,
+                    padding: 0.5,
+                    backgroundColor: "#bdbdbd"
+                  }}
+                >
+                  <Grid container direction={"row"} spacing={0}>
+                    <Grid item xs={8}>
+                      <Typography
+                        sx={{ fontSize: 15 }}
+                        color="text.primary"
+                        align="left"
+                      >
+                        Task Name: {value.name}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={4} align="right">
+
+                      <EditIcon onClick={() => editHandler(value)} />
+
+                      <DeleteIcon onClick={() => deleteHandler(value)} />
+
+                    </Grid>
+                  </Grid>
+                  <Grid container direction={"row"}>
+                    <Grid item xs={12}>
+                      <div className={classes.root1}>
                         <Typography
-                          sx={{ fontSize: 15 }}
+                          sx={{ fontSize: 14, mb: 0.5 }}
                           color="text.primary"
                           align="left"
                         >
-                          Task Name: {value.name}
+                          Description:{" "}
+                          {value.description ??
+                            (value.description ? value.description : " ")}
                         </Typography>
-                      </Grid>
-                      <Grid item xs={4} align="right">
-                        <Fab
-                          color="secondary"
-                          aria-label="edit"
-                          size="small"
-                          sx={{ marginLeft: 0.3 }}
+                        <Typography
+                          sx={{ fontSize: 14, mb: 0.5 }}
+                          color="text.primary"
                         >
-                          <EditIcon />
-                        </Fab>
-                        <Fab
-                          color="secondary"
-                          aria-label="delete"
-                          size="small"
-                          sx={{ marginLeft: 0.3 }}
+                          Date: {value.date ?? (value.date ? value.date : "")}
+                        </Typography>
+                        <Typography
+                          sx={{ fontSize: 14, mb: 0.5 }}
+                          color="text.primary"
                         >
-                          <DeleteIcon />
-                        </Fab>
-                      </Grid>
+                          Time: {value.time ?? (value.time ? value.time : "")}
+                        </Typography>
+                      </div>
                     </Grid>
-                    <Grid container direction={"row"}>
-                      <Grid item xs={12}>
-                        <div className={classes.root1}>
-                          <Typography
-                            sx={{ fontSize: 14, mb: 0.5 }}
-                            color="text.primary"
-                            align="left"
-                          >
-                            Description:{" "}
-                            {value.description ??
-                              (value.description ? value.description : " ")}
-                          </Typography>
-                          <Typography
-                            sx={{ fontSize: 14, mb: 0.5 }}
-                            color="text.primary"
-                          >
-                            Date: {value.date ?? (value.date ? value.date : "")}
-                          </Typography>
-                          <Typography
-                            sx={{ fontSize: 14, mb: 0.5 }}
-                            color="text.primary"
-                          >
-                            Time: {value.time ?? (value.time ? value.time : "")}
-                          </Typography>
-                        </div>
-                      </Grid>
-                    </Grid>
-                  </Paper>
-                </Grid>
-              ))}
-          </Grid>
+                  </Grid>
+                </Paper>
+              </Grid>
+            ))}
         </Grid>
       </Grid>
-    </React.Fragment>
-  );
+    </Grid>
+  </React.Fragment>
+);
 };
 export default Tasks;

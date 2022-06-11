@@ -50,7 +50,7 @@ const useStyles = makeStyles({
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open, drawerwidth }) => ({
-    paddingLeft: "50px",
+    paddingLeft: "47px",
     // paddingRight: 5,
     marginTop: 8.1,
     marginLeft: 20,
@@ -59,7 +59,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
       duration: theme.transitions.duration.leavingScreen,
     }),
     ...(open && {
-      paddingLeft: "10px",
+      paddingLeft: "5px",
       marginLeft: drawerwidth,
       width: `calc(100% - ${drawerwidth}px)`,
       transition: theme.transitions.create(["width", "margin"], {
@@ -187,7 +187,7 @@ const Home = (props) => {
                 <Route path="/WorkerForm" element={<WorkerForm />} exact />
                 <Route path="/ModelForm" element={<ModelForm />} exact />
                 {isLoggedIn && (
-                  <Route path={`/Account/Tasks`} element={<Account />} exact />
+                  <Route path={`/Account/MyTasks`} element={<Account sx={{ marginLeft: 0 }} />} exact />
                 )}
                 {role !== "Supplier" && (
                   <Route path="/Suppliers" element={<Suppliers />} exact />
@@ -266,7 +266,7 @@ const Home = (props) => {
                   element={<ChangePassword />}
                   exact
                 />
-                <Route path="/Tasks" element={<Tasks />} exact />
+                <Route path="/MyTasks" element={<Tasks />} exact />
                 <Route path="/TaskForm" element={<TaskForm />} exact />
               </Routes>
             </Main>

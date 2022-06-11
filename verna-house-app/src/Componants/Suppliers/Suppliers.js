@@ -242,7 +242,7 @@ function Suppliers() {
                               key={index}
                               style={{ width: column.width }}
                             >
-                              {row[column.field].length > 10 ? ('+' + row[column.field]) : row[column.field]}
+                              {column.field == "mobileNo" ? ('+' + row[column.field]) : row[column.field]}
                             </StyledTableCell>
                           );
                         }
