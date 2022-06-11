@@ -1,0 +1,323 @@
+
+# from datetime import timezone
+# import email
+# from tkinter import CASCADE
+# import uuid
+# from django.db import models
+# from django.contrib.auth.models import User
+# from django.utils import timezone
+# from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin , AbstractUser
+# # Create your models here.
+# #profile(ModelForm) ---- billing(like projects- each profile add many project) --- rolls----task--billingstatus
+
+# class Roll(models.Model):
+#     ROLL_TYPE=(
+#         ('Supplier','Supplier'),
+#         ('Worker','Worker'),
+#         ('Customer','Customer'),
+#         ('Agency','Agency'),
+#         ('Model','Model'),
+#         ('Admin', 'Admin'),
+#     )
+#     name = models.CharField( max_length=100 , blank=False, null=True, choices=ROLL_TYPE )
+#     created = models.DateTimeField(auto_now_add=True)
+#     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, unique=True )
+    
+#     def __str__(self) -> str:
+#         return str(self.name)
+   
+# class BillStatus(models.Model):
+#     BILLSTATUS_TYPE=(
+#         ('Pending','Pending'),
+#         ('Clear','Clear'),
+#     )
+#     name = models.CharField( max_length=50 ,null=True, blank=False, choices=BILLSTATUS_TYPE )
+#     created = models.DateTimeField(auto_now_add=True)
+#     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, unique=True )
+    
+#     def __str__(self) -> str:
+#         return str(self.name)   
+  
+# class OrderStatus(models.Model):
+#     ORDERSTATUS_TYPE=(
+#         ('Not Given','Not Given'),
+#         ('Pending','Pending'),
+#         ('Clear','Clear'),
+#     )
+#     name = models.CharField( max_length=50 ,null=True, blank=False, choices=ORDERSTATUS_TYPE )
+#     created = models.DateTimeField(auto_now_add=True)
+#     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, unique=True )
+    
+#     def __str__(self) -> str:
+#         return str(self.name)   
+ 
+ 
+# class Billing(models.Model):
+#     # user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=False)
+#     username = models.CharField(max_length=50, null=True, blank=False)
+#     # client = models.ForeignKey(, on_delete=models.SET_NULL,null=True, blank=False)
+#     roll = models.ForeignKey(Roll, on_delete=models.SET_NULL, null=True, blank=False)
+#     status = models.ForeignKey(BillStatus, on_delete=models.SET_NULL, null=True, blank=False)
+#     orderstatus = models.ForeignKey(OrderStatus ,on_delete=models.CASCADE, null=True, blank=True)
+#     description = models.TextField(null=True, blank=True)
+#     total = models.IntegerField(null=True, blank=True, default= 0)
+#     date = models.DateTimeField(default=timezone.now,null=True, blank=False)
+#     created = models.DateTimeField(auto_now_add=True)
+#     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, unique=True)
+    
+#     def __str__(self) -> str:
+#         return str(self.client.name)
+
+    
+# class Registration(models.Model):
+#     roll = models.ForeignKey(Roll, on_delete=models.SET_NULL, null=True, blank=False)
+
+# # 
+
+# # class CustomeUser(AbstractUser):
+# #     """Custome user model to add extra feild in django table"""
+
+   
+# #     # username = models.CharField(max_length=100, null=True, blank=False, unique=True)
+# #     email = models.EmailField(null=True, blank=False, unique=True, verbose_name="Email Address")
+# #     roll = models.ForeignKey(Roll,on_delete=models.SET_NULL, null=True, blank=False)
+# #     is_staff = models.BooleanField(default=False)
+# #     is_superuser = models.BooleanField(default=False)
+# #     is_active = models.BooleanField(default=True)
+
+# #     USERNAME_FIELD = 'email'
+# #     REQUIRED_FIELDS = [ 'username','roll','password']
+
+# #     @property
+# #     def is_staff(self):
+# #         "Is the user a member of staff?"
+# #         return self.staff
+
+# #     @property
+# #     def is_admin(self):
+# #         "Is the user a admin member?"
+# #         return self.admin
+
+
+# #     def __str__(self) -> str:
+# #         return str(self.username)
+
+# class Task(models.Model):
+#     owner = models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=False )
+#     roll = models.ForeignKey(Roll,on_delete=models.CASCADE, null=True, blank=False)
+#     date = models.DateField(null=True, blank=True)
+#     time = models.TimeField(null=True, blank=True)
+#     description = models.TextField(null=True, blank=False)
+#     created = models.DateTimeField(auto_now_add=True)
+#     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, unique=True)
+    
+#     def __str__(self) -> str:
+#         return str(self.owner)
+
+
+# """
+# class CustomeAccountManager(BaseUserManager):
+# #      Custome user manager class for new user and superuser 
+
+# #     def create_superuser(self, email, username,first_name, last_name, password, **other_fields):
+# #         other_fields.setdefault('is_staff', True)
+# #         other_fields.setdefault('is_superuser', True)
+# #         other_fields.setdefault('is_active',True)
+
+# #         if other_fields.get('is_staff') is not True:
+# #             raise ValueError('SuperUser must be assigned to is_staff=True.')
+# #         if other_fields.get('is_superuser') is not True:
+# #             raise ValueError('SuperUser must be assigned to is_superuser=True.')
+
+# #         return self._create_user(email, username, first_name, last_name, password, **other_fields)
+
+# #     def create_user(self, email,first_name, last_name, username,roll, password , **other_fields):
+# #         other_fields.setdefault("is_staff", False)
+# #         other_fields.setdefault("is_superuser", False)
+
+# #         if not email:
+# #             raise ValueError('You must provide an Email Address')
+# #         if not roll:
+# #             raise ValueError('You must provide an Email Address')
+# #         email = self.normalize_email(email)
+# #         user = self.model(email=email,username=username,first_name=first_name, last_name=last_name,roll=roll, **other_fields)
+# #         # user.set(roll)
+# #         user.set_password(password)
+# #         user.save()
+# #         return user 
+
+# """
+
+
+# from dataclasses import fields
+# from pyexpat import model
+# from django.contrib.auth.forms import UserCreationForm
+# from django import forms
+# from django.forms import ModelForm, widgets
+# from .models import Registration
+    
+    
+
+# class SignUpForm(UserCreationForm):
+#     class Meta:
+#         model : Registration
+#         fields = UserCreationForm.Meta.fields + ('Roll')
+#         widgets
+
+
+
+# ---------------------------
+
+# from django.db import models
+# import uuid
+# from Users.models import OrderStatus, Roll,User
+
+# # Create your models here.
+# #agencies(ModelForm) --- premises --- billing--task
+# class Agency(models.Model):
+#     agency = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=False)
+#     name = models.CharField(max_length=100,null=True, blank=False)
+#     email = models.EmailField(null=True, blank=False)
+#     username = models.CharField(max_length=50, null=True, blank=False)
+#     roll = models.ForeignKey(Roll, on_delete=models.SET_NULL, null=True, blank=False)
+#     # phone_regex = RegexValidator(regex="^(\+\d{1,3})?,?\s?\d{8,13}")validators=[phone_regex]
+#     # contact_no = models.CharField(verbose_name=("Mobile Number"),max_length=10, blank=True,null=True)
+#     mobileNo = models.IntegerField(null=True, blank=False, unique=True)
+#     agencyName = models.CharField(max_length=200, null=True, blank=False)
+#     agencyAddress = models.TextField(null=True, blank=False)
+#     profile_image = models.ImageField(null = True, blank = True, upload_to = "profiles/", default = "profiles/user-default.png")
+#     location = models.CharField(max_length=200, blank = True, null = True)
+#     social_website = models.CharField(max_length=200, null=True, blank = True)
+#     created = models.DateTimeField(auto_now_add=True)
+#     id = models.UUIDField(default = uuid.uuid4, editable=False, primary_key=True, unique= True)
+    
+#     def __str__(self) -> str:
+#         return str(self.agency.username)
+    
+# class Premise(models.Model):
+#     agency = models.ForeignKey(Agency,on_delete=models.CASCADE, null=True, blank=False)
+#     ItemName = models.CharField(max_length=100, null=True, blank=False)
+#     price = models.IntegerField(null=True, blank=False)
+#     TimeDurationFrom = models.DateField(null=True, blank=False)
+#     TimeDurationTo = models.DateField(null=True, blank=False)
+#     orderstatus = models.ForeignKey(OrderStatus,on_delete=models.CASCADE, null=True, blank=True)
+#     created = models.DateTimeField(auto_now_add=True)
+#     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, unique=True)
+    
+#     def __str__(self) -> str:
+#         return str(self.ItemName)
+    
+
+# -------------------------------------------
+
+# from django.db import models
+# import uuid
+# from Users.models import User
+
+# # Create your models here.
+# #customers(ModelForm) --- photos/poster ---- models --- billing
+
+
+# class Customer(models.Model):
+#     customer = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+#     name = models.CharField(max_length=50, null=True, blank=False)
+#     username = models.CharField(max_length=50, null=True, blank=False)
+#     email = models.EmailField(null=True, blank=False)
+#     mobileNo = models.IntegerField(null=True, blank=False, unique=True)
+#     companyName = models.CharField(max_length=200, null=True, blank=False)
+#     companyAddress = models.TextField(null=True, blank=False)
+#     profile_image = models.ImageField(null = True, blank = True, upload_to = "profiles/", default = "profiles/user-default.png")
+#     location = models.CharField(max_length=200, blank = True, null = True)
+#     social_website = models.CharField(max_length=200, null=True, blank = True)
+#     created = models.DateTimeField(auto_now_add=True)
+#     id = models.UUIDField(default = uuid.uuid4, editable=False, primary_key=True, unique= True)
+    
+#     def __str__(self) -> str:
+#         return str(self.customer.first_name)
+
+
+# ------------------------------------------
+
+# from doctest import BLANKLINE_MARKER
+# from email.policy import default
+# from operator import truediv
+# from platform import mac_ver
+# from pyexpat import model
+# from tkinter.tix import Balloon
+# from django.db import models
+# import uuid
+# from Users.models import OrderStatus,User
+# # Create your models here.
+# #suppliers(ModelForm) --- garments ---- billing
+
+
+# class Supplier(models.Model):
+#     supplier = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+#     name = models.CharField(max_length=50, null=True, blank=False)
+#     username = models.CharField(max_length=50, null=True, blank=False)
+#     email = models.EmailField(null=True, blank=False)
+#     mobileNo = models.IntegerField(null=True, blank=False, unique=True)
+#     organisationName = models.CharField(max_length=200, null=True, blank=False)
+#     organisationAddress = models.TextField(null=True, blank=False)
+#     profile_image = models.ImageField(null = True, blank = True, upload_to = "profiles/", default = "profiles/user-default.png")
+#     location = models.CharField(max_length=200, blank = True, null = True)
+#     social_github = models.CharField(max_length=200, null=True, blank = True)
+#     social_twitter = models.CharField(max_length=200, null=True, blank = True)
+#     social_linkedin = models.CharField(max_length=200, null=True, blank = True)
+#     social_youtube = models.CharField(max_length=200, null=True, blank = True)
+#     social_website = models.CharField(max_length=200, null=True, blank = True)
+#     created = models.DateTimeField(auto_now_add=True)
+#     id = models.UUIDField(default = uuid.uuid4, editable=False, primary_key=True, unique= True)
+    
+#     def __str__(self) -> str:
+#         return str(self.name)
+    
+# class Garment(models.Model):
+#     supplier = models.ForeignKey(Supplier,on_delete=models.CASCADE, null=True, blank=False)
+#     GarmentName = models.CharField(max_length=100, null=True, blank=False)
+#     price = models.IntegerField(null=True, blank=False)
+#     TimeDurationFrom = models.DateField(null=True, blank=False)
+#     TimeDurationTo = models.DateField(null=True, blank=False)
+#     orderstatus = models.ForeignKey(OrderStatus,on_delete=models.CASCADE, null=True, blank=True)
+#     created = models.DateTimeField(auto_now_add=True)
+#     id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, unique=True)
+    
+#     def __str__(self) -> str:
+#         return str(self.GarmentName)
+    
+
+# -----------------------------------
+
+
+# from distutils.command import upload
+# from email.policy import default
+# from pyexpat import model
+# from tokenize import blank_re
+# from unicodedata import name
+# import uuid
+# from django.db import models
+# from Users.models import User
+
+# # Create your models here.
+# # Workers(ModelForm) -----billing----task
+
+# class Worker(models.Model):
+#     worker = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+#     name = models.CharField(null=True, blank=False, max_length=50)
+#     username = models.CharField(max_length=50, null=True, blank=False)
+#     email = models.EmailField(null=True, blank=False)
+#     mobileNo = models.BigIntegerField(null=True, blank=False)
+#     address = models.CharField(max_length=400, null=True, blank=False)
+#     short_intro = models.CharField(max_length=500, null=True, blank=True)
+#     profile_image = models.ImageField(null=True, blank=True,upload_to="profiles/", default="profiles/user-default.png" )
+#     location = models.CharField(max_length=50, null=True, blank=False)
+#     created = models.DateTimeField(auto_now_add=True)
+#     id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
+    
+#     def __str__(self) -> str:
+#         return str(self.name)
+    
+
+    
+    
+
