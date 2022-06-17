@@ -30,16 +30,21 @@ import {
   editModelReducer,
 } from "./Model/ModelReducer";
 
-import { TaskReducer, AddTaskReducer } from "./Task/TaskReducer";
+import {
+  getTasksReducer,
+  addTaskReducer,
+  editTaskReducer,
+  deleteTaskReducer,
+} from "./Task/TaskReducer";
 import {
   getGadgetsReducer,
-  getGadgetReducer,
+  deleteGadgetReducer,
   addGadgetReducer,
   editGadgetReducer,
 } from "./Gadget/GadgetReducer";
 import {
   getGarmentsReducer,
-  getGarmentReducer,
+  deleteGarmentReducer,
   addGarmentReducer,
   editGarmentReducer,
 } from "./Garment/GarmentReducer";
@@ -73,18 +78,20 @@ const RootReducers = combineReducers({
   model: getModelReducer,
   emodel: editModelReducer,
 
-  tasks: TaskReducer,
-  addTask: AddTaskReducer,
+  tasks: getTasksReducer,
+  addTask: addTaskReducer,
+  etask: editTaskReducer,
+  dtask: deleteTaskReducer,
 
   gadgets: getGadgetsReducer,
-  gadget: getGadgetReducer,
   addGadget: addGadgetReducer,
   egadget: editGadgetReducer,
+  dgadget: deleteGadgetReducer,
 
   garments: getGarmentsReducer,
-  garment: getGarmentReducer,
   addGarment: addGarmentReducer,
   egarment: editGarmentReducer,
+  degarment: deleteGarmentReducer,
 
   photoposters: PhotoPosterReducer,
 });

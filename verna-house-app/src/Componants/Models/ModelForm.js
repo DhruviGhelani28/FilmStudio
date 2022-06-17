@@ -60,8 +60,7 @@ const ModelForm = () => {
 
   const handleChange = (prop) => (event) => {
     console.log(prop);
-    // if (prop !== "picture") {
-    // console.log(event.target.files[0])
+
     setValues({ ...values, [prop]: event.target.value });
     if (prop == "profileImage") {
       console.log(event.target.files[0]);
@@ -82,9 +81,7 @@ const ModelForm = () => {
     control,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
-    // const data1 = a.push(data)
-    // data.profileImage = event.ta
+  const onSubmit = () => {
     console.log(values);
     const data1 = { ...state, ...values };
     // console.log(JSON.stringify(data, null, 2));
@@ -201,7 +198,7 @@ const ModelForm = () => {
                 // ref={register}
                 {...register("profileImage", { required: true })}
                 error={!!errors?.profileImage}
-                value={values?.profileImage}
+                // value={values?.profileImage}
                 onChange={handleChange("profileImage")}
               ></TextField>
             </Grid>

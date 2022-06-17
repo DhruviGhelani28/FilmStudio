@@ -6,7 +6,7 @@ import { Grid } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import { useNavigate } from "react-router-dom";
+
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import classes from "../Login.module.css";
@@ -19,11 +19,7 @@ import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { useDispatch, useSelector } from "react-redux";
 import MenuItem from "@mui/material/MenuItem";
-import {
-  addGadget,
-  getGadget,
-  editGadget,
-} from "../../Store/Gadget/GadgetAction";
+import { addGadget, editGadget } from "../../Store/Gadget/GadgetAction";
 
 const useStyles = makeStyles({
   root1: {
@@ -69,35 +65,27 @@ const GadgetForm = (props) => {
     formState: { errors },
   } = useForm();
 
-  const gadgetId = props.gadgetId;
-  console.log(gadgetId);
+  const gadgetData = props.gadgetData;
+  console.log(gadgetData);
 
-  const gadget = useSelector((state) => state.gadget);
-  useEffect(() => {
-    // if (props.gadgetId) {
-    dispatch(getGadget({ id: gadgetId }));
-    // console.log("--------a------", a);
-    // }
-  }, [dispatch]);
-  console.log(gadget.getGadget);
   const [values, setValues] = React.useState({
-    gadgetName: "",
-    gadgetImage: "",
-    price: "",
-    orderStatus: "",
-    timeDuration: "",
+    gadgetName: gadgetData?.itemName,
+    gadgetImage: `${gadgetData?.premiseImage}`,
+    price: gadgetData?.price,
+    orderStatus: gadgetData?.orderStatus,
+    timeDuration: gadgetData?.timeDuration,
   });
-  useEffect(() => {
-    // if (props.gadgetId) {
-    setValues({
-      gadgetName: gadget.getGadget?.itemName,
-      gadgetImage: `${gadget.getGadget?.premiseImage}`,
-      price: gadget.getGadget?.price,
-      orderStatus: gadget.getGadget?.orderStatus,
-      timeDuration: gadget.getGadget?.timeDuration,
-    });
-    // }
-  }, []);
+  // useEffect(() => {
+  //   // if (props.gadgetId) {
+  //   setValues({
+  //     gadgetName: gadget.getGadget?.itemName,
+  //     gadgetImage: `${gadget.getGadget?.premiseImage}`,
+  //     price: gadget.getGadget?.price,
+  //     orderStatus: gadget.getGadget?.orderStatus,
+  //     timeDuration: gadget.getGadget?.timeDuration,
+  //   });
+  //   // }
+  // }, []);
   const handleChange = (prop) => (event) => {
     console.log(prop);
 
@@ -110,10 +98,10 @@ const GadgetForm = (props) => {
 
   const onSubmit = () => {
     console.log(values);
-    if (props.gadgetId) {
-      dispatch(editGadget({ values: values }, gadgetId));
+    if (props.modal_type == "Edit") {
+      dispatch(editGadget(values, props.gadgetData.id));
     } else {
-      dispatch(addGadget({ values: values }));
+      dispatch(addGadget(values));
     }
 
     props.setReload(true);
@@ -162,7 +150,7 @@ const GadgetForm = (props) => {
             color="#fff"
             className={classes.registration}
           >
-            {props.gadgetId ? "Edit" : "Add"} Gadget
+            {props.gadgetData ? "Edit" : "Add"} Gadget
           </Typography>
           <Grid
             container

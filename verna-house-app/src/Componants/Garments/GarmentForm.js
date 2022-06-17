@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useLocation } from "react-router-dom";
+
 import { useForm, Controller } from "react-hook-form";
 import { Grid } from "@mui/material";
 import Card from "@mui/material/Card";
@@ -20,11 +20,7 @@ import FormControl from "@mui/material/FormControl";
 import { useDispatch, useSelector } from "react-redux";
 
 import MenuItem from "@mui/material/MenuItem";
-import {
-  addGarment,
-  getGarment,
-  editGarment,
-} from "../../Store/Garment/GarmentAction";
+import { addGarment, editGarment } from "../../Store/Garment/GarmentAction";
 
 const useStyles = makeStyles({
   root1: {
@@ -71,43 +67,32 @@ const GarmentForm = (props) => {
     formState: { errors },
   } = useForm();
 
-  const garmentId = props.garmentId;
-  console.log(garmentId);
+  console.log(props.garmentData);
 
-  const garment = useSelector((state) => state.garment);
-
-  useEffect(() => {
-    let a = dispatch(getGarment({ id: props.garmentId }));
-    a.then((res) => {
-      console.log("--------a------", res);
-    });
-  }, [props.garmentId, dispatch]);
-
-  console.log(garment.getGarment);
   const [values, setValues] = React.useState({
-    garmentName: "",
-    garmentImage: "",
-    price: "",
-    orderStatus: "",
-    timeDuration: "",
+    garmentName: props.garmentData?.garmentName,
+    garmentImage: `${props.garmentData?.garmentImage}`,
+    price: props.garmentData?.price,
+    orderStatus: props.garmentData?.orderStatus?.name,
+    timeDuration: props.garmentData?.timeDuration,
   });
 
-  useEffect(() => {
-    setValues({
-      garmentName: garment?.getGarment?.garmentName,
-      garmentImage: `${garment?.getGarment?.garmentImage}`,
-      price: garment.getGarment?.price,
-      orderStatus: garment?.getGarment?.orderStatus,
-      timeDuration: garment?.getGarment?.timeDuration,
-    });
-  }, [props.garmentId]);
+  // useEffect(() => {
+  //   setValues({
+  //     garmentName: props.garmentData?.garmentName,
+  //     garmentImage: `${props.garmentData?.garmentImage}`,
+  //     price: props.garmentData?.price,
+  //     orderStatus: props.garmentData?.orderStatus?.name,
+  //     timeDuration: props.garmentData?.timeDuration,
+  //   });
+  // }, [props.garmentData]);
 
   const onSubmit = () => {
     console.log(values);
-    if (props.garmentId) {
-      dispatch(editGarment({ values: values }, garmentId));
+    if (props.modal_type == "Edit") {
+      dispatch(editGarment(values, props.garmentData.id));
     } else {
-      dispatch(addGarment({ values: values }));
+      dispatch(addGarment(values));
     }
     props.setReload(true);
     props.onClick();
@@ -164,7 +149,7 @@ const GarmentForm = (props) => {
             color="#fff"
             className={classes.registration}
           >
-            {props.garmentId ? "Edit" : "Add"} Garment
+            {props.garmentData ? "Edit" : "Add"} Garment
           </Typography>
           <Grid
             container
@@ -237,10 +222,11 @@ const GarmentForm = (props) => {
                   sx={{ textAlign: "left" }}
                   id="orderStatus"
                   label="Order Status"
+                  defaultValue=""
                   required
                   {...register("orderStatus", { required: true })}
                   error={!!errors?.orderStatus}
-                  value={values?.orderStatus}
+                  value={values?.orderStatus?.name}
                   onChange={handleChange("orderStatus")}
                 >
                   {OrderStatus.map((option) => (

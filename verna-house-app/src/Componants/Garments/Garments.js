@@ -34,11 +34,12 @@ const useStyles = makeStyles({
 const Garments = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
   const mygarments = useSelector((state) => state.garments);
   const [reload, setReload] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [open1, setOpen1] = React.useState(false);
-  const [id, setId] = React.useState("");
+  const [garmentData, setGarmentData] = React.useState({});
   const [garments, setGarments] = useState([]);
   const data = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -63,12 +64,13 @@ const Garments = (props) => {
   useEffect(() => {
     setGarments(mygarments.getMyGarments);
   }, [mygarments.getMyGarments, reload]);
+
   console.log(garments);
 
   const editHandler = (value) => {
     handleOpen1();
     console.log("id:--", value.id);
-    setId(value.id);
+    setGarmentData(value);
   };
   const deleteHandler = (value) => {
     dispatch(deleteGarment(value.id));
@@ -172,7 +174,9 @@ const Garments = (props) => {
                   }}
                 >
                   {data["role"] == "Admin" && (
-                    <Button size="small">Give Order</Button>
+                    <Button size="small" varient="">
+                      Give Order
+                    </Button>
                   )}
                   {data["role"] == "Supplier" && (
                     <>
@@ -186,7 +190,7 @@ const Garments = (props) => {
               </Card>
             </Grid>
           ))}
-        {id && (
+        {garmentData && (
           <Backdrop
             sx={{
               color: "#fff",
@@ -197,8 +201,9 @@ const Garments = (props) => {
             <GarmentForm
               onClick={handleClose}
               open={open1}
-              garmentId={id}
+              garmentData={garmentData}
               setReload={setReload}
+              modal_type="Edit"
             ></GarmentForm>
           </Backdrop>
         )}

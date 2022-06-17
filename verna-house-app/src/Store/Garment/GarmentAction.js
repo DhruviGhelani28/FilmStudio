@@ -60,7 +60,7 @@ export const getGarment = (id) => async (dispatch) => {
 
 export const addGarment = (values) => async (dispatch) => {
   console.log("addgarment dispatch");
-  console.log(values["values"]);
+  console.log(values);
   try {
     const token = JSON.parse(localStorage.getItem("userInfo")).token;
 
@@ -72,7 +72,7 @@ export const addGarment = (values) => async (dispatch) => {
     };
     const response = await axios.post(
       `${BaseUrl}/api/AddGarment/`,
-      values["values"],
+      values,
       config
     );
     console.log("garment call---", response.data);
@@ -91,7 +91,7 @@ export const addGarment = (values) => async (dispatch) => {
 };
 
 export const editGarment = (values, id) => async (dispatch) => {
-  console.log("edit garment dispatch", values["values"], id);
+  console.log("edit garment dispatch", values, id);
   try {
     const token = JSON.parse(localStorage.getItem("userInfo")).token;
     const config = {
@@ -102,6 +102,7 @@ export const editGarment = (values, id) => async (dispatch) => {
     };
     const response = await axios.put(
       `${BaseUrl}/api/EditGarment/${id}`,
+      values,
       config
     );
     console.log("edit garment call", response.data);

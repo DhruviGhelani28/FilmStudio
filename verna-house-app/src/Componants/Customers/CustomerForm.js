@@ -80,7 +80,7 @@ const CustomerForm = (props) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
+  const onSubmit = () => {
     console.log(values);
     const data1 = { ...state, ...values };
 
@@ -221,7 +221,7 @@ const CustomerForm = (props) => {
               <Button
                 variant="contained"
                 className={classes1.root4}
-                // onClick={handleSubmit(onSubmit)}
+                onClick={handleSubmit(onSubmit)}
                 sx={{
                   marginTop: 0.5,
                   marginRight: -34,

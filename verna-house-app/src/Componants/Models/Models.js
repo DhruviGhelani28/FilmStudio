@@ -141,6 +141,7 @@ const columns = [
 function Models() {
   const [open, setOpen] = React.useState(false);
   const [id, setId] = React.useState("");
+  const data = JSON.parse(localStorage.getItem("userInfo"));
   const handleClose = () => {
     setOpen(false);
   };
@@ -207,9 +208,11 @@ function Models() {
                       {column.headerName}
                     </StyledTableCell>
                   ))}
-                <StyledTableCell key="action" sx={{ width: 300 }}>
-                  Actions
-                </StyledTableCell>
+                {data["role"] == "Admin" && (
+                  <StyledTableCell key="action" sx={{ width: 300 }}>
+                    Actions
+                  </StyledTableCell>
+                )}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -246,22 +249,24 @@ function Models() {
                           );
                         }
                       })}
-                    <StyledTableCell key={index} sx={{ width: 200 }}>
-                      <EditIcon onClick={() => editHandler(row)} />
-                      <DeleteIcon onClick={() => deleteHandler(row)}>
-                        {" "}
-                      </DeleteIcon>
-                      <Button
-                        variant="outlined"
-                        style={{
-                          backgroundColor: "black",
-                          color: "white",
-                          padding: 1.5,
-                        }}
-                      >
-                        View Details
-                      </Button>
-                    </StyledTableCell>
+                    {data["role"] == "Admin" && (
+                      <StyledTableCell key={index} sx={{ width: 200 }}>
+                        <EditIcon onClick={() => editHandler(row)} />
+                        <DeleteIcon onClick={() => deleteHandler(row)}>
+                          {" "}
+                        </DeleteIcon>
+                        <Button
+                          variant="outlined"
+                          style={{
+                            backgroundColor: "black",
+                            color: "white",
+                            padding: 1.5,
+                          }}
+                        >
+                          View Details
+                        </Button>
+                      </StyledTableCell>
+                    )}
                   </StyledTableRow>
                 ))}
 

@@ -29,34 +29,34 @@ export const getMyGadgets = () => async (dispatch) => {
   }
 };
 
-export const getGadget = (id) => async (dispatch) => {
-  console.log("Gadget dispatch", id["id"]);
-  try {
-    const token = JSON.parse(localStorage.getItem("userInfo")).token;
-    const config = {
-      headers: {
-        "content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    const response = await axios.get(
-      `${BaseUrl}/api/GetGadget/${id["id"]}`,
-      config
-    );
-    console.log("Gadget call", response.data);
-    dispatch({
-      type: UserActionType.GET_GADGET_SUCCESS,
-      gadgets: response.data,
-    });
-  } catch (error) {
-    const gadget_error = "You are not authorised person to get the gadgets.";
-    dispatch({
-      type: UserActionType.GET_GADGET_FAIL,
-      gadgets: gadget_error,
-    });
-    // console.log("You are not authorised person to list the suppliers.");
-  }
-};
+// export const getGadget = (id) => async (dispatch) => {
+//   console.log("Gadget dispatch", id["id"]);
+//   try {
+//     const token = JSON.parse(localStorage.getItem("userInfo")).token;
+//     const config = {
+//       headers: {
+//         "content-type": "application/json",
+//         Authorization: `Bearer ${token}`,
+//       },
+//     };
+//     const response = await axios.get(
+//       `${BaseUrl}/api/GetGadget/${id["id"]}`,
+//       config
+//     );
+//     console.log("Gadget call", response.data);
+//     dispatch({
+//       type: UserActionType.GET_GADGET_SUCCESS,
+//       gadgets: response.data,
+//     });
+//   } catch (error) {
+//     const gadget_error = "You are not authorised person to get the gadgets.";
+//     dispatch({
+//       type: UserActionType.GET_GADGET_FAIL,
+//       gadgets: gadget_error,
+//     });
+//     // console.log("You are not authorised person to list the suppliers.");
+//   }
+// };
 
 export const addGadget = (values) => async (dispatch) => {
   console.log("addGadget dispatch");
@@ -72,7 +72,7 @@ export const addGadget = (values) => async (dispatch) => {
     };
     const response = await axios.post(
       `${BaseUrl}/api/AddGadget/`,
-      values["values"],
+      values,
       config
     );
     console.log("Gadget call");
@@ -103,8 +103,8 @@ export const editGadget = (values, id) => async (dispatch) => {
       },
     };
     const response = await axios.post(
-      `${BaseUrl}/api/EditGadget/${id["id"]}`,
-      values["values"],
+      `${BaseUrl}/api/EditGadget/${id}`,
+      values,
       config
     );
     console.log("EIDIT Gadget call");

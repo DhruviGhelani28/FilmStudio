@@ -32,7 +32,7 @@ const Gadgets = (props) => {
   const [reload, setReload] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [open1, setOpen1] = React.useState(false);
-  const [id, setId] = React.useState("");
+  const [gadgetData, setGadgetData] = React.useState("");
   const [gadgets, setGadgets] = useState([]);
   const data = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -62,7 +62,7 @@ const Gadgets = (props) => {
   const editHandler = (value) => {
     handleOpen1();
     console.log("id:--", value.id);
-    setId(value.id);
+    setGadgetData(value);
   };
   const deleteHandler = (value) => {
     dispatch(deleteGadget(value.id));
@@ -139,12 +139,17 @@ const Gadgets = (props) => {
                   alt="green iguana"
                   height="250"
                   image={`http://127.0.0.1:8000${value.premiseImage}`}
-                // "../..//static/PhotoPoster/contemplative-reptile.jpg"
+                  // "../..//static/PhotoPoster/contemplative-reptile.jpg"
                 />
                 <CardContent
                   sx={{ marginTop: 0, marginBottom: 0, paddingBottom: 0 }}
                 >
-                  <Typography variant="h6" component="div" color="text.primary" sx={{ fontSize: 16 }}>
+                  <Typography
+                    variant="h6"
+                    component="div"
+                    color="text.primary"
+                    sx={{ fontSize: 16 }}
+                  >
                     {value.itemName}
                   </Typography>
                   <Typography variant="body2" color="text.primary">
@@ -185,20 +190,23 @@ const Gadgets = (props) => {
               </Card>
             </Grid>
           ))}
-        <Backdrop
-          sx={{
-            color: "#fff",
-            zIndex: (theme) => theme.zIndex.drawer + 1,
-          }}
-          open={open1}
-        >
-          <GadgetForm
-            onClick={handleClose}
+        {gadgetData && (
+          <Backdrop
+            sx={{
+              color: "#fff",
+              zIndex: (theme) => theme.zIndex.drawer + 1,
+            }}
             open={open1}
-            gadgetId={id}
-            setReload={setReload}
-          />
-        </Backdrop>
+          >
+            <GadgetForm
+              onClick={handleClose}
+              open={open1}
+              gadgetData={gadgetData}
+              setReload={setReload}
+              modal_type="Edit"
+            />
+          </Backdrop>
+        )}
       </Grid>
     </React.Fragment>
   );

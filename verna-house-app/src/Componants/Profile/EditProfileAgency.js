@@ -47,7 +47,7 @@ const EditProfileAgency = (props) => {
     mobileNo: "",
     agencyName: "",
     agencyAddress: "",
-    profileImage: "",
+    profileImage: null,
     location: "",
     socialWebsite: "",
   });
@@ -70,7 +70,7 @@ const EditProfileAgency = (props) => {
     console.log(prop);
     setValues({ ...values, [prop]: event.target.value });
     if (prop == "profileImage") {
-      console.log(event.target.files);
+      console.log(event.target.files[0]);
       setValues({ ...values, profileImage: event.target.files[0].name });
     }
   };
@@ -227,7 +227,11 @@ const EditProfileAgency = (props) => {
                 fontSize: 15,
               }}
             >
-              <input type={"file"} onChange={handleChange("profileImage")} />
+              <input
+                type={"file"}
+                name="profileImage"
+                onChange={handleChange("profileImage")}
+              />
               <label>{values?.profileImage}</label>
             </label>
           </Grid>

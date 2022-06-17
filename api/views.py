@@ -264,15 +264,25 @@ class TaskView(APIView):
             owner = user,
             role = Role.objects.get(name=user.role),
             # owner. = data['user'],
-            name = data['taskname'],
+            name = data['taskName'],
             description = data['description'],
-            date = data['datetime'].split("T")[0],
-            time = data['datetime'].split("T")[1]
+            date = data['dateTime'].split("T")[0],
+            time = data['dateTime'].split("T")[1]
         )
         task.save()
         # print(data['datetime'].split("T")[0])
         serializer = TaskSerializer(task, many=False)
         return Response(serializer.data)
+    
+    @api_view(['DELETE'])
+    @permission_classes([IsAuthenticated])
+    def deleteTask(request, pk):
+        user= request.user.profile
+        print
+        task = Task.objects.get(id=pk)
+        task.delete()
+        return Response({"message" : "task has deleted"})
+        
 
 
 class GadgetView(APIView):
@@ -303,7 +313,7 @@ class GadgetView(APIView):
             itemName = data['gadgetName'],
             premiseImage = data['gadgetImage'],
             price = data['price'],
-            orderstatus = OrderStatus.objects.get(name = data['orderStatus']),
+            orderStatus = OrderStatus.objects.get(name = data['orderStatus']),
             timeDuration = data['timeDuration'],
             )
         print(gadget, gadget.premiseImage, gadget.orderstatus, gadget)
@@ -311,13 +321,13 @@ class GadgetView(APIView):
         serializer = PremiseSerializer(gadget, many=False)
         return Response(serializer.data)
     
-    @api_view(['GET'])
-    @permission_classes([IsAuthenticated])
-    def getGadget(request, pk):
-        # agency = request.user.agency
-        gadget = Premise.objects.get(id=pk)
-        serializer = PremiseSerializer(gadget, many=False)
-        return Response(serializer.data)
+    # @api_view(['GET'])
+    # @permission_classes([IsAuthenticated])
+    # def getGadget(request, pk):
+    #     # agency = request.user.agency
+    #     gadget = Premise.objects.get(id=pk)
+    #     serializer = PremiseSerializer(gadget, many=False)
+    #     return Response(serializer.data)
     
     @api_view(['PUT'])
     @permission_classes([IsAuthenticated])

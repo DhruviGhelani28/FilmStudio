@@ -187,7 +187,11 @@ const Home = (props) => {
                 <Route path="/WorkerForm" element={<WorkerForm />} exact />
                 <Route path="/ModelForm" element={<ModelForm />} exact />
                 {isLoggedIn && (
-                  <Route path={`/Account/MyTasks`} element={<Account sx={{ marginLeft: 0 }} />} exact />
+                  <Route
+                    path={`/Account/MyTasks`}
+                    element={<Account sx={{ marginLeft: 0 }} />}
+                    exact
+                  />
                 )}
                 {role !== "Supplier" && (
                   <Route path="/Suppliers" element={<Suppliers />} exact />

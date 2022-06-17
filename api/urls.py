@@ -30,7 +30,7 @@ urlpatterns = [
     path('DeleteGarment/<str:pk>', GarmentView.deleteGarment),
     
     path('MyGadgets/', GadgetView.getGadgets),
-    path('GetGadget/<str:pk>', GadgetView.getGadget),
+    # path('GetGadget/<str:pk>', GadgetView.getGadget),
     path('AddGadget/', GadgetView.addGadget),
     path('EditGadget/<str:pk>', GadgetView.editGadget),
     path('DeleteGadget/<str:pk>', GadgetView.deleteGadget),
@@ -80,6 +80,10 @@ urlpatterns = [
     path("DeleteCustomer/<str:pk>",CustomerView.deleteCustomer),
     path("DeleteWorker/<str:pk>",WorkerView.deleteWorker),
     path('DeleteModel/<str:pk>', ModelView.deleteModel),
+    
+    path("DeleteTask/<str:pk>", TaskView.deleteTask),
+    # path("DeleteGarment/<str:pk>", GarmentView.deleteGarment),
+    # path("DeleteGadget/<str:pk>", GadgetView.deleteGadget),
 
     
 

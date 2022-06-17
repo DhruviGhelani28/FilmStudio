@@ -145,6 +145,7 @@ function Agencies() {
   };
   const dispatch = useDispatch();
   const agencies = useSelector((state) => state.agencies);
+  const data = JSON.parse(localStorage.getItem("userInfo"));
   const [rows, setRows] = React.useState([]);
   const [reload, setReload] = React.useState(false);
   useEffect(() => {
@@ -202,9 +203,11 @@ function Agencies() {
                       {column.headerName}
                     </StyledTableCell>
                   ))}
-                <StyledTableCell key="action" sx={{ width: 300 }}>
-                  Actions
-                </StyledTableCell>
+                {data["role"] == "Admin" && (
+                  <StyledTableCell key="action" sx={{ width: 300 }}>
+                    Actions
+                  </StyledTableCell>
+                )}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -241,22 +244,24 @@ function Agencies() {
                           );
                         }
                       })}
-                    <StyledTableCell key={index} sx={{ width: 200 }}>
-                      <EditIcon onClick={() => editHandler(row)} />
-                      <DeleteIcon onClick={() => deleteHandler(row)}>
-                        {" "}
-                      </DeleteIcon>
-                      <Button
-                        variant="outlined"
-                        style={{
-                          backgroundColor: "black",
-                          color: "white",
-                          padding: 1.5,
-                        }}
-                      >
-                        View Details
-                      </Button>
-                    </StyledTableCell>
+                    {data["role"] == "Admin" && (
+                      <StyledTableCell key={index} sx={{ width: 200 }}>
+                        <EditIcon onClick={() => editHandler(row)} />
+                        <DeleteIcon onClick={() => deleteHandler(row)}>
+                          {" "}
+                        </DeleteIcon>
+                        <Button
+                          variant="outlined"
+                          style={{
+                            backgroundColor: "black",
+                            color: "white",
+                            padding: 1.5,
+                          }}
+                        >
+                          View Details
+                        </Button>
+                      </StyledTableCell>
+                    )}
                   </StyledTableRow>
                 ))}
               <Dialog open={open} sx={{ padding: 0.5, width: 900 }}>

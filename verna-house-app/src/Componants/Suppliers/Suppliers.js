@@ -148,6 +148,7 @@ const columns = [
 function Suppliers() {
   const [open, setOpen] = React.useState(false);
   const [id, setId] = React.useState("");
+  const data = JSON.parse(localStorage.getItem("userInfo"));
   const handleClose = () => {
     setOpen(false);
   };
@@ -213,9 +214,11 @@ function Suppliers() {
                       {column.headerName}
                     </StyledTableCell>
                   ))}
-                <StyledTableCell key="action" sx={{ width: 300 }}>
-                  Actions
-                </StyledTableCell>
+                {data["role"] == "Admin" && (
+                  <StyledTableCell key="action" sx={{ width: 300 }}>
+                    Actions
+                  </StyledTableCell>
+                )}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -224,9 +227,7 @@ function Suppliers() {
                   <StyledTableRow hover key={index}>
                     {columns &&
                       columns.map((column, index) => {
-                        if (
-                          column.type === "string"
-                        ) {
+                        if (column.type === "string") {
                           return (
                             <StyledTableCell
                               key={index}
@@ -235,49 +236,52 @@ function Suppliers() {
                               {row[column.field]}
                             </StyledTableCell>
                           );
-                        }
-                        else if (column.type === "number") {
+                        } else if (column.type === "number") {
                           return (
                             <StyledTableCell
                               key={index}
                               style={{ width: column.width }}
                             >
-                              {column.field == "mobileNo" ? ('+' + row[column.field]) : row[column.field]}
+                              {column.field == "mobileNo"
+                                ? "+" + row[column.field]
+                                : row[column.field]}
                             </StyledTableCell>
                           );
-                        }
-                        else {
+                        } else {
                           return (
                             <StyledTableCell
                               key={index}
                               style={{ padding: 0.1 }}
                             >
                               <img
-                                src={`http://127.0.0.1:8000${row[column.field]
-                                  }`}
+                                src={`http://127.0.0.1:8000${
+                                  row[column.field]
+                                }`}
                                 style={{ height: 100, width: 100 }}
                               />
                             </StyledTableCell>
                           );
                         }
                       })}
-                    <StyledTableCell key={index} sx={{ width: 200 }}>
-                      <EditIcon onClick={() => editHandler(row)} />
+                    {data["role"] == "Admin" && (
+                      <StyledTableCell key={index} sx={{ width: 200 }}>
+                        <EditIcon onClick={() => editHandler(row)} />
 
-                      <DeleteIcon onClick={() => deleteHandler(row)}>
-                        {" "}
-                      </DeleteIcon>
-                      <Button
-                        variant="outlined"
-                        style={{
-                          backgroundColor: "black",
-                          color: "white",
-                          padding: 1.5,
-                        }}
-                      >
-                        View Details
-                      </Button>
-                    </StyledTableCell>
+                        <DeleteIcon onClick={() => deleteHandler(row)}>
+                          {" "}
+                        </DeleteIcon>
+                        <Button
+                          variant="outlined"
+                          style={{
+                            backgroundColor: "black",
+                            color: "white",
+                            padding: 1.5,
+                          }}
+                        >
+                          View Details
+                        </Button>
+                      </StyledTableCell>
+                    )}
                   </StyledTableRow>
                 ))}
 

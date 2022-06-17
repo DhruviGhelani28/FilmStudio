@@ -27,52 +27,54 @@ import { createTheme } from "@mui/material";
 // });
 
 const Tasks = (props) => {
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
   const dispatch = useDispatch();
   const myTasks = useSelector((state) => state?.tasks);
-  const [id, setId] = useState("")
-  const { addTask } = useSelector((state) => state?.addTask);
-  const { editTask } = useSelector((state) => state?.editTask);
-  const [reload, setReload] = useState(false)
+  const [taskDetail, setTaskDetail] = useState({});
+  const [reload, setReload] = useState(false);
+
   const [tasks, setTasks] = useState([]);
   const data = JSON.parse(localStorage.getItem("userInfo"));
+
+  // const { editTask } = eTask;
   useEffect(() => {
     dispatch(MyTasks());
-  }, [dispatch, reload, editTask, addTask]);
+  }, [dispatch, reload]);
 
   useEffect(() => {
     setTasks(myTasks.getMyTasks);
-  }, [myTasks.getMyTasks]);
+  }, [myTasks.getMyTasks, reload]);
+
   console.log(tasks);
-  const navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
   const [open1, setOpen1] = React.useState(false);
   const handleClose = () => {
     setOpen(false);
-    setOpen1(false)
+  };
+  const handleClose1 = () => {
+    setOpen1(false);
   };
   const handleToggle = () => {
-    setOpen(!open);
+    setOpen(true);
   };
   const handleOpen = () => {
     setOpen1(true);
   };
 
   const editHandler = (task) => {
-    handleOpen()
-    setId(task.id)
-  }
+    // console.log(task);
+    setTaskDetail(task);
+    handleOpen();
+  };
   const deleteHandler = (task) => {
-    dispatch(deleteTask(task.id))
-    setReload(true)
-  }
+    dispatch(deleteTask(task.id));
+    setReload(true);
+  };
+
   useEffect(() => {
     const body = document.querySelector("body");
     body.style.overflow = open ? "hidden" : "auto";
-  }, [open])
+  }, [open]);
   return (
     <React.Fragment>
       <Grid sx={{ flexGrow: 1 }} container spacing={{ xs: 0, md: 1 }}>
@@ -97,7 +99,11 @@ const Tasks = (props) => {
               sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
               open={open}
             >
-              <TaskForm onClick={handleClose} open={open} setReload={setReload}></TaskForm>
+              <TaskForm
+                onClick={handleClose}
+                open={open}
+                setReload={setReload}
+              ></TaskForm>
             </Backdrop>
           </Grid>
         </Grid>
@@ -114,10 +120,10 @@ const Tasks = (props) => {
                 <Grid key={value.id} item xs={3}>
                   <Paper
                     sx={{
-                      maxHeight: 400,
+                      height: 140,
                       maxWidth: 300,
                       padding: 0.5,
-                      backgroundColor: "#bdbdbd"
+                      backgroundColor: "#bdbdbd",
                     }}
                   >
                     <Grid container direction={"row"} spacing={0}>
@@ -131,11 +137,9 @@ const Tasks = (props) => {
                         </Typography>
                       </Grid>
                       <Grid item xs={4} align="right">
-
                         <EditIcon onClick={() => editHandler(value)} />
 
                         <DeleteIcon onClick={() => deleteHandler(value)} />
-
                       </Grid>
                     </Grid>
                     <Grid container direction={"row"}>
@@ -168,12 +172,22 @@ const Tasks = (props) => {
                   </Paper>
                 </Grid>
               ))}
-            {id && <Backdrop
-              sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-              open={open1}
-            >
-              <TaskForm onClick={handleClose} open={open} setReload={setReload} taskId={id} modal_type="Edit"></TaskForm>
-            </Backdrop>}
+            {taskDetail && (
+              <Backdrop
+                sx={{
+                  color: "#fff",
+                  zIndex: (theme) => theme.zIndex.drawer + 1,
+                }}
+                open={open1}
+              >
+                <TaskForm
+                  onClick={handleClose1}
+                  setReload={setReload}
+                  taskData={taskDetail}
+                  modal_type="Edit"
+                ></TaskForm>
+              </Backdrop>
+            )}
           </Grid>
         </Grid>
       </Grid>
